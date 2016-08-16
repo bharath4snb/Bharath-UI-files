@@ -1,0 +1,48 @@
+<div infinite-scroll="vm.grabMore()" infinite-scroll-distance="1" infinite-scroll-immediate-check="false" infinite-scroll-disabled="!vm.postsAvalaible" >
+  <div class="profile-tab-wrapper ne-user-post-display">
+
+    <div class="row" data-ng-show="vm.hasPosts" ng-repeat="post in vm.posts track by $index" ng-cloak>
+
+      <div class="col-xs-12 text-center" ng-show="vm.busy">
+        <wui-spinner ng-show="vm.busy"></wui-spinner>
+      </div>
+
+      <div class="col-xs-12">
+
+        <div class="wui-card">
+          <div class="wui-card__label-header">
+            <div class="wui-card__label">
+              <div class="wui-card__label-content text-right">
+                <wui-timestamp date="post.keydate"></wui-timestamp>
+              </div>
+            </div>
+          </div>
+
+          <div class="wui-card__content">
+            <div class="wui-card__header wui-card__header--before-text">
+              <div class="wui-card__header-left">Post</div>
+            </div>
+
+            <div class="wui-card__body">
+              <div class="wui-card__body-content">
+                <ne-notification-publication data-publication="post" data-type="posts" class=""></ne-notification-publication>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row" ng-show="!vm.hasPosts">
+      <div class="col-xs-12 current-user-no-posts" data-ng-show="vm.isCurrentUsersProfile">
+        <p><post-link class="ne-profile-view__post-link" analytics-event event-category="post" event-action="write"  modal-controller="PostDialogController" post="{}"></post-link> &ndash; give an update, pose a question, share an interesting find.</p>
+      </div>
+
+      <div class="col-xs-12 other-user-no-posts" data-ng-show="!vm.isCurrentUsersProfile">
+        <p>No posts yet. Follow {{vm.title}} to get notified when they publish a post.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

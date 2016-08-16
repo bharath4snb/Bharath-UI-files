@@ -1,0 +1,64 @@
+<div class="search-result-refine-menu">
+  <div class="clearfix search-result-refine-menu__header" ng-click="toggleRefineCollapse()" ng-hide="vm.noRefines">
+    <span class="wui-super-header">Refine</span>
+
+    <button class="pull-right wui-mini-btn wui-mini-btn--secondary" ng-click="vm.resetRefines()">Reset</button>
+  </div>
+
+  <accordion close-others="{{false}}">
+    <accordion-group ng-repeat="agg in vm.aggs" ng-init="status.open=agg.buckets[0].checked || agg.show" is-open="status.open" ng-show="agg.buckets.length > 0">
+
+      <accordion-heading>
+        <div ng-click="vm.saveOpenFilter(agg)">
+          <span>{{agg.display}}</span>
+
+          <i class="fa pull-right" ng-class="{'fa-sort-desc': status.open, 'fa-sort-asc': !status.open}"></i>
+        </div>
+      </accordion-heading>
+
+      <ul class="list-group search-result-refine-menu__list">
+        <li class="list-group-item search-result-refine-menu__list-item" ng-repeat="item in agg.buckets | limitTo:5 track by $index " ng-init="uid=vm.getUid()">
+          <wui-checkbox
+            id="{{uid}}"
+            class="search-result-refine-menu__checkbox"
+            selected="item.checked"
+            onselectionchange="vm.toggleRefines(item.key, agg.name)"
+            analytics-event
+            event-category="searchresult-ck-refine"
+            event-action="{{agg.name}}"
+          >
+            <span class="wui-emphasis">{{item.key}}</span>
+
+            <span ng-hide="item.checked">({{item.doc_count | number}})</span>
+          </wui-checkbox>
+        </li>
+
+        <div collapse="!conceptCollapse">
+          <span ng-show="agg.buckets.length < 2">No more Refines</span>
+
+          <li class="list-group-item search-result-refine-menu__list-item" ng-repeat="item in agg.buckets | startFrom:5 track by $index " ng-init="uid=vm.getUid()">
+            <wui-checkbox
+              id="{{uid}}"
+              class="refine-checkbox"
+              selected="item.checked"
+              onselectionchange="vm.toggleRefines(item.key, agg.name)"
+              analytics-event
+              event-category="searchresult-ck-refine"
+              event-action="{{agg.name}}"
+            >
+              <span class="wui-emphasis">{{item.key}}</span>
+
+              <span ng-hide="item.checked">({{item.doc_count | number}})</span>
+            </wui-checkbox>
+          </li>
+        </div>
+      </ul>
+
+      <button ng-show="agg.buckets.length > 5" ng-click="conceptCollapse = !conceptCollapse" class="search-result-refine-menu__load-button">
+        <span ng-show="!conceptCollapse">More</span>
+
+        <span ng-hide="!conceptCollapse">Less</span>
+      </button>
+    </accordion-group>
+  </accordion>
+</div>

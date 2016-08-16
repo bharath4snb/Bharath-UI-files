@@ -1,0 +1,105 @@
+<div class="container watchlist-details">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <h2 class="wui-content-title wui-content-title--large">{{vm.data.containerName}}</h2>
+
+      <div class="wui-metric wui-metric--watchlist-details" ng-show="vm.isOwnerOrisPublic">
+        <span class="wui-metric__value">{{vm.itemsCount}}</span>
+        <span class="wui-metric__label">Items</span>
+      </div>
+
+      <p data-ng-hide="vm.isNotOwnerAndNotPublic">{{vm.data.containerDesc}}</p>
+
+      <div class="watchlist-details__profile" data-ng-if="vm.isNotOwnerAndHasData">
+        <ne-user-profile-object truid="{{vm.data.ownerUserId}}"></ne-user-profile-object>
+
+        <p data-ng-show="!vm.data.isPublic">Has deleted or made this Watchlist private.</p>
+      </div>
+
+      <p data-ng-show="!vm.data.containerId">This Watchlist does not exist.</p>
+    </div>
+
+    <div class="col-xs-12 col-sm-4">
+      <div class="watchlist-details__header-right" data-ng-show="vm.data.isOwner && !vm.isFormVisible">
+        <div class="watchlist-details__controls">
+          <div class="watchlist-details__status" data-ng-if="vm.data.isPublic">
+            <i class="fa fa-rss watchlist-details__status-icon"></i>
+            <span>Public</span>
+          </div>
+
+          <div class="watchlist-details__buttons">
+            <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="vm.toggleForm()" analytics-event
+                    event-category="watchlist-ck-edit" event-action="edit watchlist">
+              Edit
+            </button>
+
+            <button class="wui-mini-btn wui-mini-btn--secondary wui-mini-btn--watchlist-delete" ng-click="vm.openDeleteModal(vm.data.containerId)"
+                    analytics-event event-category="watchlist-details-ck-delete" event-action="delete watchlist">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <p class="wui-large-text wui-large-text--watchlist-details" data-ng-show="vm.supportingCopyIsVisible">
+        Add articles, patents and posts to your watchlist for easy reference. Making it public will allow others to see it on your profile.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div  data-ne-watchlist-form
+            ng-if="vm.isFormVisible"
+            data-submit-callback="vm.successUpdating"
+            data-cancel-callback="vm.hideForm"
+            watchlist="vm.data">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div ng-repeat="record in vm.detailedItems track by $index">
+        <div class="wui-card">
+          <div class="wui-card__label-header" ng-if="record.type === 'posts'">
+            <div class="wui-card__label">
+              <div class="wui-card__label-content text-right">
+                <wui-timestamp date="record.date" ng-if="record.date"></wui-timestamp>
+              </div>
+            </div>
+          </div>
+
+          <div class="wui-card__content">
+            <div class="wui-card__header wui-card__header--before-text">
+              <div class="wui-card__header-left">{{record.type | renameTypeWatchlist}}</div>
+            </div>
+
+            <ne-search-result-type analytics-prefix="watchlist"
+                                   search-type="{{record.type}}"
+                                   info="record"
+                                   watch-button="false">
+            </ne-search-result-type>
+
+            <div class="wui-card__footer">
+              <div class="wui-card__footer-left">
+                <ne-watch-directive publication-id="{{record.id}}"
+                                    type="{{record.type}}">
+                </ne-watch-directive>
+              </div>
+
+              <div class="wui-card__footer-right">
+                <results-metrics></results-metrics>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

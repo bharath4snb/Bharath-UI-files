@@ -1,0 +1,61 @@
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+
+      <h3 class="wui-subtitle">Settings</h3>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+
+      <div class="account-content">
+        <h4 class="wui-super-header wui-super-header--divider">Email</h4>
+
+        <p><span>{{Account.loginid}}</span></p>
+
+        <p ng-hide="Account.isSteamProvider()">
+          Your email address is associated with your <a href ng-href="{{Account.providerUrl}}" target="_blank">{{Account.provider}}</a> account
+        </p>
+      </div>
+
+      <div class="account-content">
+        <h4 class="wui-super-header wui-super-header--divider">Password</h4>
+
+        <p ng-show="Account.isSteamProvider()">
+          <a href
+             class="wui-btn wui-btn--primary"
+             analytics-event
+             event-category="change-password-click"
+             event-action="change-password"
+             ng-click="Account.callResetPassword()">
+            Change password
+          </a>
+        </p>
+
+        <p ng-hide="Account.isSteamProvider()">
+          Your password is associated with your <a href ng-href="{{Account.providerUrl}}" target="_blank">{{Account.provider}}</a> account
+        </p>
+      </div>
+
+      <div class="account-content">
+        <h4 class="wui-super-header wui-super-header--divider">Communications</h4>
+
+        <div class="account-checkbox">
+          <wui-checkbox id="checkbox" onselectionchange="Account.emailOptInOut()" selected="Account.receiveNotifications">
+              Receive email notifications for likes, comments and other activity.
+          </wui-checkbox>
+        </div>
+
+        <p>
+          <a href="http://resources.science.thomsonreuters.com/forms/ProfileCenterAccess1"
+             class="wui-btn wui-btn--secondary"
+             ng-click="Account.setLink('')"
+             target="_blank">
+            View additional email preferences
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>

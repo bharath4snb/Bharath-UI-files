@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h3 class="wui-super-header wui-super-header--divider">Activity</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <aside class="wui-side-menu profile-side-menu">
+      <ul class="wui-side-menu__list">
+        <li ng-repeat="tab in vm.detailTabs"
+            class="wui-side-menu__list-item"
+            data-ui-sref-active="wui-side-menu__list-item--active"
+            ng-class="{'wui-side-menu__list-item--active': vm.defaultTabActive && tab.route === 'profile.post'}"
+            ng-show="tab.isShown"
+        >
+          <a href
+            class="wui-side-menu__link"
+            data-ui-sref="{{tab.route}}({truid: vm.truid})"
+            data-analytics-event data-event-category="profile{{tab.heading.toLowerCase()}}" data-event-action="tabselect"
+          >
+            {{tab.heading}} <span class="wui-side-menu__badge">{{tab.count | number:0}}</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+
+  <div class="col-sm-9 profile-tab-content">
+    <div data-ui-view></div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div infinite-scroll="vm.getMore()" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-disabled="isBusy">
+  <div class="wui-card wui-card--search-results" ng-if="vm.render" ng-repeat="record in vm.results track by $index">
+    <div class="wui-card__content">
+      <div class="wui-card__header wui-card__header--before-text">
+        <div class="wui-card__header-left">{{record.type | renameType}}</div>
+      </div>
+
+      <div class="wui-card__body">
+        <div class="wui-card__body-content">
+          <ne-search-result-type analytics-prefix="searchresult"
+                                 search-type="{{record.type}}"
+                                 info="record"></ne-search-result-type>
+        </div>
+      </div>
+
+      <div class="wui-card__footer">
+        <div class="wui-card__footer-left">
+          <ne-watch-directive ng-if="record.type !== 'people'"
+                              publication-id="{{record.id}}"
+                              type="{{record.type}}">
+          </ne-watch-directive>
+        </div>
+
+        <div class="wui-card__footer-right">
+          <results-metrics></results-metrics>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

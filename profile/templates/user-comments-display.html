@@ -1,0 +1,70 @@
+<div infinite-scroll="vm.grabMore()" infinite-scroll-distance="1" infinite-scroll-immediate-check="false" infinite-scroll-disabled="vm.busy" >
+  <div class="profile-tab-wrapper comments-display">
+
+    <div class="row user-comment" ng-show="vm.hasComments" ng-repeat="comment in vm.commentList.comments track by $index">
+      <div class="col-xs-12 text-center" ng-show="vm.busy">
+        <wui-spinner ng-show="vm.busy"></wui-spinner>
+      </div>
+
+      <div class="col-xs-12">
+
+        <div class="wui-card">
+          <div class="wui-card__label-header">
+            <div class="wui-card__label">
+              <div class="wui-card__label-content text-right">
+                <wui-timestamp date="comment.keydateModified"></wui-timestamp>
+              </div>
+            </div>
+          </div>
+          <div class="wui-card__content">
+            <div class="wui-card__header wui-card__header--before-text">
+              <div class="wui-card__header-left">
+                Your Comment
+              </div>
+            </div>
+
+            <div class="wui-card__body">
+              <div class="wui-card__body-content">
+                <div class="wui-content-title wui-content-title--medium">
+                  <a ng-show="comment.record._type=='wos'" ui-sref="articleView({id: comment.record._id})">{{comment.record.fields['fullrecord.summary.title'][0]}}</a>
+                  <a ng-show="comment.record._type=='posts'" ui-sref="PostsView({id: comment.record._id})">{{comment.record.fields['fullrecord.summary.title'][0]}}</a>
+                  <a ng-show="comment.record._type=='patents'" ui-sref="patentView({id: comment.record._id})">{{comment.record.fields['fullrecord.summary.title'][0]}}</a>
+                </div>
+
+                <div class="profile-comment__content" ng-bind-html="comment.content"></div>
+              </div>
+            </div>
+
+            <div class="wui-card__footer">
+              <div class="wui-card__footer-content text-right">
+                <button class="wui-icon-metric" ng-click="vm.appreciateThis(comment.id, 'UP')" ng-if="comment.statistics.hasAppreciated !== 'UP'" tooltip="Like Comment" tooltip-placement="right">
+                  <i class="wui-icon-metric__icon fa fa-thumbs-o-up"></i>
+                  <span class="wui-icon-metric__value">{{comment.statistics.appreciateCount}}</span>
+                  <span class="wui-icon-metric__label">Likes</span>
+                </button>
+
+                <button class="wui-icon-metric" ng-click="vm.appreciateThis(comment.id, 'DOWN')" ng-if="comment.statistics.hasAppreciated === 'UP'" tooltip="Unlike Comment" tooltip-placement="right">
+                  <i class="wui-icon-metric__icon wui-icon-metric__icon--active fa fa-thumbs-o-up"></i>
+                  <span class="wui-icon-metric__value">{{comment.statistics.appreciateCount}}</span>
+                  <span class="wui-icon-metric__label">Likes</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row" ng-show="!vm.hasComments">
+      <div class="col-xs-12 current-user-no-comments " data-ng-show="vm.isCurrentUsersProfile">
+        <p>Share your opinion – add a comment to posts, articles or patents you find interesting.</p>
+      </div>
+
+      <div class="col-xs-12 other-user-no-comments" data-ng-show="!vm.isCurrentUsersProfile">
+        <p>Not yet commented. Follow {{vm.title}} to get notified when they comment.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

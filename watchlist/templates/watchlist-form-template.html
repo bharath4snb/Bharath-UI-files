@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-xs-12">
+
+    <form class="watchlist-form" name="WatchlistForm.form" ng-submit="WatchlistForm.saveWatchlist()" novalidate>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-2 col-md-push-10">
+          <div class="watchlist-item__controls">
+            <div class="pull-right watchlist-item__checkbox">
+              <div wui-checkbox id="{{'checkbox-' + WatchlistForm.activeWatchlist.containerID}}" selected="WatchlistForm.isPublic" class="wui-checkbox-wrapper"
+                   tooltip="{{WatchlistForm.isPublic ? 'Make Watchlist private' : 'Make Watchlist visible to everyone'}}"
+                   tooltip-placement="bottom">Public</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-10 col-md-pull-2">
+          <div class="wui-input">
+            <input
+              type="text" id="watchlist-name" class="wui-input__input-field"
+              placeholder="Name your Watchlist"
+              aria-label="Watchlist Name"
+              ng-model="WatchlistForm.activeWatchlist.containerName"
+              required
+              pattern=".{2,}"
+            />
+
+            <span class="wui-input__count">
+              <span class="watchlist-name-count">{{WatchlistForm.activeWatchlist.containerName.length||0}}</span>
+              /
+              <span class="watchlist-name-max"></span>
+            </span>
+
+            <div ng-show="WatchlistForm.showErrors()">
+              <div data-ng-messages="WatchlistForm.form.$error">
+                <div data-ng-message="required" class="watchlist-item-error wui-input__error">Please provide a name for your Watchlist.</div>
+                <div data-ng-message="pattern" class="watchlist-item-error wui-input__error">Please provide a name with at least two characters.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="wui-textarea">
+            <textarea id="watchlist-description" class="wui-textarea__textarea-field" placeholder="Add a description" aria-label="Watchlist Description" ng-model="WatchlistForm.activeWatchlist.containerDesc"></textarea>
+
+            <p class="wui-textarea__count">
+              <span class="watchlist-description-count">{{WatchlistForm.activeWatchlist.containerDesc.length}}</span>
+              /
+              <span class="watchlist-description-max"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="pull-right">
+            <wui-spinner class="pull-left" ng-show="WatchlistForm.isBusy"></wui-spinner>
+
+            <button type="reset" class="wui-btn wui-btn--secondary" ng-click="WatchlistForm.cancel($event)" analytics-event event-category="watchlist-ck-edit" event-action="cancel">Cancel</button>
+
+            <button type="submit" class="wui-btn wui-btn--primary" ng-disabled="WatchlistForm.isInvalid()" analytics-event event-category="watchlist-ck-edit" event-action="save">{{WatchlistForm.submitLabel}}</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>

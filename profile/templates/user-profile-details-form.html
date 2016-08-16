@@ -1,0 +1,107 @@
+<div class="ne-user-profile-details" ng-if="vm.doneLoadingProfile">
+  <div ng-hide="vm.isEditing">
+    <h2 class="wui-title wui-title--user-profile-name">
+      {{vm.getFullName(vm.user)}}
+      <span
+        ng-if="vm.user.hcrIndicator"
+        class="wui-title__hcr-indicator"
+        ng-include="'modules/views/profile/templates/hcr.html'"
+        ></span>
+    </h2>
+
+    <button class="wui-mini-btn wui-mini-btn--secondary wui-mini-btn--edit-user-profile-details" ng-show="vm.shouldShowEditButton()" ng-click="vm.startEditing()">Edit</button>
+
+    <div class="wui-descriptor wui-descriptor--user-profile-details">
+      <span class="ne-user-profile-details__metadata" ng-if="vm.user.role">{{vm.user.role}}</span>
+
+      <span class="ne-user-profile-details__metadata" ng-if="vm.user.primaryInstitution">{{vm.user.primaryInstitution}}</span>
+
+      <span class="ne-user-profile-details__metadata" ng-if="vm.user.location">{{vm.user.location}}</span>
+    </div>
+
+    <div class="ne-user-profile-details__control" ng-hide="!vm.canEdit() || vm.user.role">
+      <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="vm.startEditing('role')">{{vm.rolePlaceholder}}</button>
+    </div>
+
+    <div class="ne-user-profile-details__control" ng-hide="!vm.canEdit() || vm.user.primaryInstitution">
+      <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="vm.startEditing('primaryInstitution')">{{vm.primaryInstitutionPlaceholder}}</button>
+    </div>
+
+    <div class="ne-user-profile-details__control" ng-hide="!vm.canEdit() || vm.user.location">
+      <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="vm.startEditing('location')">{{vm.locationPlaceholder}}</button>
+    </div>
+    <div class="ne-user-profile-details__control">
+      <div
+        class="tooltip bottom-right in tooltip--profile-cta"
+        ng-show="vm.isProfileIncomplete()"
+        >
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">Complete your profile to help connect you with others and locate your articles.</div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="vm.isEditing">
+    <ne-user-details-form data-profile="vm.user">
+      <div
+        class="tooltip bottom-right in tooltip--profile-cta"
+        ng-show="vm.isProfileIncomplete()"
+        >
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">Complete your profile to help connect you with others and locate your articles.</div>
+      </div>
+      <div class="wui-textarea" ng-show="vm.shouldShowSummaryInput()">
+        <textarea class="wui-textarea__textarea-field wui-textarea__textarea-field--ne-user-details"
+                  placeholder="{{vm.summaryPlaceholder}}"
+                  aria-label="{{vm.summaryPlaceholder}}"
+                  focus-on="summary"
+                  ng-model="vm.user.summary"
+                  maxlength="{{::vm.summaryMaxlength}}"
+                  ng-trim="false"
+                  ng-keyup="vm.updateSummaryLength(vm.user.summary)"
+                  ng-paste="vm.updateSummaryLength(vm.user.summary)"
+                  >
+        </textarea>
+        <p class="wui-textarea__count">{{vm.summaryLength}} / {{::vm.summaryMaxlength}}</p>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div
+            class="tooltip bottom-right in tooltip--profile-cta"
+            ng-show="vm.isSummaryIncomplete()"
+            >
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-inner">Tell others what you do and what inspires you to do it.</div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="text-right" ng-show="vm.isEditing">
+            <button ng-disabled="vm.savingProfile" class="wui-btn wui-btn--secondary" ng-click="vm.cancelEditing()">Cancel</button>
+
+            <button ng-disabled="vm.savingProfile" class="wui-btn wui-btn--primary" ng-click="vm.saveUserData()">Update</button>
+          </div>
+        </div>
+      </div>
+    </ne-user-details-form>
+  </div>
+
+  <ne-times-cited data-truid="{{vm.user.truid}}"></ne-times-cited>
+
+  <div ng-hide="vm.shouldShowSummaryInput()">
+    <div class="ne-user-profile-details__control" ng-show="vm.shouldShowAddSummaryPrompt()">
+      <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="vm.startEditing('summary')">{{vm.summaryPlaceholder}}</button>
+    </div>
+    <div class="ne-user-profile-details__control">
+      <div
+        class="tooltip bottom-right in tooltip--profile-cta"
+        ng-show="vm.isSummaryIncomplete()"
+        >
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">Tell others what you do and what inspires you to do it.</div>
+      </div>
+    </div>
+
+    <p class="ne-user-profile-details__summary" ng-hide="vm.shouldShowAddSummaryPrompt()">{{vm.user.summary}}</p>
+  </div>
+</div>

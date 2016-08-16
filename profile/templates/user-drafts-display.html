@@ -1,0 +1,48 @@
+<div class="profile-tab-wrapper user-drafts-display">
+
+  <div class="row" ng-show="vm.showThisDraft(draft)" ng-repeat="draft in vm.draftList.drafts track by $index">
+    <div class="col-xs-12">
+
+      <div class="wui-card wui-card--user-drafts">
+        <div class="wui-card__label-header">
+          <div class="wui-card__label">
+            <div class="wui-card__label-content text-right">
+              <span class="timestamp-label">Saved:</span><wui-timestamp date="draft.modified"></wui-timestamp>
+            </div>
+          </div>
+        </div>
+
+        <div class="wui-card__content">
+          <div class="wui-card__header wui-card__header--before-text">
+            <div class="wui-card__header-left">Post (Draft)</div>
+          </div>
+
+          <div class="wui-card__body">
+            <div class="wui-card__body-content">
+              <div class="wui-content-title wui-content-title--medium wui-content-title--draft-post-title">
+                <a href ng-click="vm.titleClicked(draft)">{{vm.draftTitle(draft)}}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="wui-card__footer">
+            <div class="wui-card__footer-content text-right">
+              <div class="users-draft-display__post-controls" post-button modal-controller="PostDialogController" post="draft"></div>
+              <div class="users-draft-display__post-controls" post-delete-button target="draft" target-type="draft" modal-controller="PostDeleteDialogController"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row" data-ng-show="vm.isShowingLoadMore()" ng-cloak>
+    <div class="col-xs-12 text-center">
+      <div infinite-scroll="vm.grabMore()" infinite-scroll-distance="1" infinite-scroll-immediate-check="false" infinite-scroll-disabled="vm.busy === true"></div>
+    </div>
+  </div>
+
+  <div data-ng-hide="vm.draftList.loadDone" data-wui-spinner></div>
+
+</div>

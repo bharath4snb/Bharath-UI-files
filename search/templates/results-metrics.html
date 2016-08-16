@@ -1,0 +1,38 @@
+<div class="wui-metric"
+     ng-if="record.statistics.recordViewCount && record.statistics.recordViewCount > 0"
+     tooltip="Views" tooltip-placement="bottom">
+  <span class="wui-metric__value">{{record.statistics.recordViewCount | number }}</span>
+  <span class="wui-metric__label">Views</span>
+</div>
+
+<div class="wui-icon-metric"
+     ng-if="record.statistics.commentCount && record.statistics.commentCount != 0"
+     tooltip="Comments" tooltip-placement="bottom">
+  <i class="fa fa-comment-o wui-icon-metric__icon"></i>
+  <span class="wui-icon-metric__value">{{record.statistics.commentCount | number }}</span>
+  <span class="wui-icon-metric__label">Comments</span>
+</div>
+
+<div class="wui-icon-metric"
+     ng-if="record.statistics.appreciateCount"
+     tooltip="Likes" tooltip-placement="bottom">
+  <i ng-if="record.statistics.hasAppreciated != 'UP'"
+     class="fa fa-thumbs-o-up wui-icon-metric__icon"></i>
+  <i ng-if="record.statistics.hasAppreciated === 'UP'"
+     class="fa fa-thumbs-o-up wui-icon-metric__icon wui-icon-metric__icon--active"></i>
+  <span class="wui-icon-metric__value">{{record.statistics.appreciateCount | number}}</span>
+  <span class="wui-icon-metric__label">Likes</span>
+</div>
+
+<div class="wui-icon-metric"
+     ng-if="record.citing > 0 || record.rcsciting > 0"
+     tooltip="Times Cited" tooltip-placement="bottom">
+  <i class="wui-icon-metric__icon wui-icon wui-icon--times-cited"></i>
+  <span class="wui-icon-metric__value">{{(record.citing === 0) ? record.rcsciting : record.citing }}</span>
+  <span class="wui-icon-metric__label">Times Cited</span>
+</div>
+
+<div class="wui-metric" ng-if="record.statistics.postCount">
+  <span class="wui-metric__value">{{record.statistics.postCount | number }}</span>
+  <span class="wui-metric__label">Posts</span>
+</div>

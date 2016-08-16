@@ -1,0 +1,26 @@
+@import (reference) '../../../../less/bootstrap';
+
+
+// ==========================================================================
+// Profile Actions: Claiming ORCiD and Publish a Post
+// ==========================================================================
+
+.profile-actions-center {
+  @media (min-width: @screen-tablet) and (max-width: (@screen-desktop - 1)) {
+    .claiming-orcid {
+      .claiming-orcid-heading {
+        margin-top: 15px;
+      }
+    }
+  }
+
+  @media (max-width: @screen-desktop) {
+    margin-top: @spacing-medium;
+
+    .claiming-orcid {
+      .wui-divider--heavy {
+        display: none;
+      }
+    }
+  }
+}

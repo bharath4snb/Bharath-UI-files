@@ -1,0 +1,71 @@
+<div class="modal-header wui-modal__header">
+  <h3 class="wui-modal__title">Profile Picture</h3>
+
+  <button
+    class="wui-modal__close-btn"
+    title="Close"
+    ng-click="cancel()"
+    data-analytics-event data-event-category="profileimage-ck-image" data-event-action="cancel"
+  >
+    <i class="fa fa-close"></i>
+  </button>
+</div>
+
+<div class="modal-body wui-modal__body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="row">
+        <div class="col-xs-6 col-sm-8">
+          <p>Select Image File: </p>
+        </div>
+
+        <div class="col-xs-6 col-sm-4">
+          <button
+            id="browser-file"
+            class="wui-btn wui-btn--secondary"
+            ng-click="openFileDialog()"
+            analytics-event event-category="profileimage-ck-image" event-action="browse"
+            >Browse</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+      <img class="preview-prof-img" ng-src="{{imageInfo.src}}" data-alt="{{imageAlt}}" />
+
+      <p class="preview-prof-img-name">{{imageInfo.name}}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="prof-img-size-warning">(Images must be no more than 1024px or 256KB in size)</p>
+    </div>
+  </div>
+
+  <file id="image-dialog-upload" class="file-upload hidden" ng-model="inputFile"
+    accept="image/png,image/jpg,image/jpeg" ng-change="imageSet()"></file>
+</div>
+
+<div class="modal-footer wui-modal__footer">
+  <div class="row">
+    <div class="col-xs-12" ng-hide="!errorMsg() || imageLoading">
+      <p class="prof-img-size-error-msg text-left">{{errorMsg()}}</p>
+    </div>
+
+    <div class="col-xs-12">
+      <button
+        class="wui-btn wui-btn--secondary wui-btn--modal-footer"
+        ng-click="cancel()"
+        data-analytics-event data-event-category="profileimage-ck-image" data-event-action="cancel"
+      >Cancel</button>
+
+      <button
+        class="wui-btn wui-btn--primary wui-btn--modal-footer"
+        ng-click="ok()"
+        ng-disabled="!isValid()"
+        data-analytics-event data-event-category="profileimage-ck-image" data-event-action="update"
+      >Update</button>
+    </div>
+  </div>
+</div>

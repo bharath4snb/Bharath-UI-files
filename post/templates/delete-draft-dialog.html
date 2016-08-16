@@ -1,0 +1,19 @@
+<div class="modal-header wui-modal__header">
+  <h3 class="wui-modal__title">Delete Draft Post</h3>
+  <button
+    class="wui-modal__close-btn"
+    title="Close"
+    ng-click="cancel()"
+  >
+    <i class="fa fa-close"></i>
+  </button>
+</div>
+
+<div class="modal-body wui-modal__body">
+  <p>Are you sure you wish to delete this draft post?</p>
+</div>
+
+<div class="modal-footer wui-modal__footer">
+  <button class="wui-btn wui-btn--secondary wui-btn--modal-footer" ng-click="cancel()">Cancel</button>
+  <button class="wui-btn wui-btn--primary wui-btn--modal-footer" ng-click="close()">Delete</button>
+</div>

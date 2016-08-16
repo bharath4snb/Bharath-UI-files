@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+      <h2 class="wui-title">Watchlists</h2>
+    </div>
+
+    <div class="col-xs-6">
+      <form class="form-inline">
+        <div class="form-group pull-right">
+          <label for="watchlistFilter">
+            Order By:
+            <select id="watchlistFilter" class="form-control"
+                    ng-model="Workspace.selectedSort"
+                    ng-options="sort as sort.label for sort in Workspace.sortables track by sort.value">
+            </select>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-3 col-lg-2 watchlist-side-menu">
+      <ul wui-side-menu class="watchlist-side-menu__refine-list" selected-index="0">
+        <li><a ng-click="Workspace.updateWatchlistType('All')">All Watchlists <span class="wui-side-menu__badge">{{Workspace.totalCount}}</span></a></li>
+        <li><a ng-click="Workspace.updateWatchlistType('Public')">Public <span class="wui-side-menu__badge">{{Workspace.publicCount}}</span></a></li>
+        <li><a ng-click="Workspace.updateWatchlistType('Private')">Private <span class="wui-side-menu__badge">{{Workspace.privateCount}}</span></a></li>
+      </ul>
+
+      <button type="button" class="wui-icon-btn watchlist-side-menu__create-button" ng-click="Workspace.toggleCreateForm()" analytics-event event-category="watchlist-ck-new" event-action="create watchlist">
+        <i class="fa fa-plus"></i>
+        <span class="wui-icon-btn__label">Create new Watchlist</span>
+      </button>
+    </div>
+
+    <div class="col-xs-12 col-md-9 col-lg-10">
+      <div class="row">
+        <div class="col-xs-12 watchlist-item" ng-if="Workspace.isFormVisible">
+          <div data-ne-watchlist-form data-submit-callback="Workspace.submitWatchlistForm" data-cancel-callback="Workspace.hideCreateForm"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--Begin Repeat of Watchlists-->
+        <div class="col-xs-12">
+          <div class="watchlist-item"
+               ng-repeat="watchlist in Workspace.results | orderBy : Workspace.selectedSort.value"
+               ng-if="watchlist.containerStatus== Workspace.listType || Workspace.listType=='All'">
+
+            <div class="wui-card">
+              <div class="wui-card__label">
+                <div class="wui-card__label-content text-right">
+                  <wui-timestamp date="watchlist.modified"></wui-timestamp>
+                </div>
+              </div>
+
+              <div class="wui-card__content">
+                <div class="wui-card__header">
+                  <div class="wui-card__header-content wui-card__header-content--watchlist">
+                    <span class="watchlist-item__status" data-ng-show="{{watchlist.containerStatus === 'Public'}}">
+                      <i class="fa fa-rss"></i>
+                      Public
+                    </span>
+                  </div>
+                </div>
+
+                <div class="wui-card__body">
+                  <div class="wui-card__body-content">
+                    <div class="wui-content-title wui-content-title--medium">
+                      <a ui-sref="watchlist-detail({containerId: '{{watchlist.containerId}}'})">
+                        {{watchlist.containerName}}
+                      </a>
+                    </div>
+
+                    <div class="watchlist-metrics">
+                      <div class="wui-metric">
+                        <span class="wui-metric__value">{{watchlist.containerItemTypeCount.wos}}</span>
+                        <span class="wui-metric__label">Articles</span>
+                      </div>
+
+                      <div class="wui-metric">
+                        <span class="wui-metric__value">{{watchlist.containerItemTypeCount.posts}}</span>
+                        <span class="wui-metric__label">Posts</span>
+                      </div>
+
+                      <div class="wui-metric">
+                        <span class="wui-metric__value">{{watchlist.containerItemTypeCount.patents}}</span>
+                        <span class="wui-metric__label">Patents</span>
+                      </div>
+                    </div>
+
+                    <p class="watchlist-item__description" ng-if="watchlist.containerDesc">
+                      {{watchlist.containerDesc}}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="wui-card__footer">
+                  <div class="wui-card__footer-content">
+                    <div class="text-right">
+                      <button class="wui-mini-btn wui-mini-btn--secondary" ng-click="Workspace.toggleEditForm(watchlist)" analytics-event event-category="watchlist-ck-edit" event-action="edit watchlist">
+                        Edit
+                      </button>
+                    </div>
+
+                    <div ng-if="watchlist.inEditMode" data-ne-watchlist-form data-submit-callback="Workspace.submitWatchlistForm" data-cancel-callback="Workspace.hideEditForm(record)" watchlist="watchlist"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--End Repeat of Watchlists-->
+      </div>
+
+      <div class="row" ng-hide="Workspace.results.length" >
+        <div class="col-xs-12">
+          <p class="wui-title wui-title--watchlist-default-text">{{::Workspace.serverMsg}}</p>
+
+          <p>
+            Create and name your Watchlists to keep your watched items organized. Watchlists can be shared with the
+            Project Neon Community, or kept private. Create a watchlist now.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,72 @@
+<div ng-contoller="SearchController">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-9">
+        <h2 class="wui-title">
+          <span>Search Results: </span>
+          <span ng-show="searchResults[0].total || false">{{totalResults | number}}</span>
+        </h2>
+      </div>
+
+      <div class="col-xs-12 col-sm-5 col-md-3" ng-show="searchResults[0].total || false">
+        <ne-search-sort
+          on-sort="sortChanged"
+          agg-type="searchType"
+          button-text="sortText"
+          order-filter="orderBy"
+        ></ne-search-sort>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-3">
+        <div class="search-result-type-menu">
+          <search-type-selector
+            type-change="applyChanges"
+            search-type="searchType"
+            query-counters="queryCounters"
+            is-busy="busy"
+          ></search-type-selector>
+        </div>
+
+        <div ng-hide="refineDisabled">
+          <div collapse="noResults || isRefineCollapsed() || refineDisabled">
+            <ne-aggregates
+              aggregates="aggs"
+              agg-type="searchType"
+              on-refine="getSearchResults"
+            ></ne-aggregates>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-9">
+        <div ng-show="totalResults > 0 ">
+          <ne-search-results
+            results="searchResults"
+            render="render"
+            load-more="getMore"
+            is-busy="busy"
+          ></ne-search-results>
+        </div>
+
+        <wui-spinner ng-show="busy"></wui-spinner>
+
+        <div ng-show="noResults">
+          <p class="wui-title" ng-show="searchType != 'ALL'">Your search for <strong>{{::lastQuery}}</strong> found no matches in {{toTitleCase(searchType)}}.</p>
+
+          <p class="wui-title" ng-show="searchType === 'ALL'">Your search for <strong>{{::lastQuery}}</strong> found no matches.</p>
+
+          <p>Suggestions:</p>
+
+          <ul>
+            <li>Make sure all words are spelled correctly.</li>
+            <li>Try different keywords.</li>
+            <li>Try more general keywords.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

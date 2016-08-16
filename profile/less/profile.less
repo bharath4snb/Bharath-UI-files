@@ -1,0 +1,270 @@
+@import (reference) '../../../../less/bootstrap';
+
+
+// ==========================================================================
+// Profile
+// ==========================================================================
+
+
+// Animation
+// ==========================================================================
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeinout {
+  &.ng-hide-add,
+  &.fadeout {
+    animation: .75s fade-out ease;
+  }
+
+  &.ng-hide-remove,
+  &.follow,
+  .unfollow {
+    animation: .75s fade-in ease;
+  }
+}
+
+
+// Profile Page
+// ==========================================================================
+
+.ne-profile-view {
+  position: relative;
+  margin-top: @spacing-medium;
+  word-wrap: break-word;
+
+  .form-control {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding-left: @spacing-small;
+  }
+
+  .tags {
+    appearance: none;
+  }
+}
+
+.ne-profile-view__header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: @spacing-medium;
+
+  @media (min-width: @screen-tablet) {
+    flex-direction: row;
+  }
+}
+
+.ne-profile-view-image {
+  align-self: center;
+  margin-bottom: @spacing-medium;
+
+  @media (min-width: @screen-tablet) {
+    align-self: auto;
+    margin: 0 @spacing-small 0 0;
+  }
+
+  .ne-user-profile-image-main-wrapper {
+    @media (max-width: (@screen-tablet - 1)) {
+      margin-right: 0;
+    }
+  }
+}
+
+.ne-profile-view-user-details {
+  text-align: center;
+
+  @media (min-width: @screen-tablet) {
+    flex: 1;
+    align-self: center;
+    min-width: 0;
+    text-align: left;
+  }
+}
+
+.wui-title--user-profile-name {
+  margin: 0;
+
+  @media (min-width: @screen-tablet) {
+    padding-right: @spacing-large;
+  }
+}
+
+.wui-mini-btn--edit-user-profile-details {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.wui-descriptor--user-profile-details {
+  font-size: @fontsize-14;
+}
+
+.wui-title__hcr-indicator .wui-icon--hcr {
+  padding: 6px 0;
+  margin: 0 @spacing-medium 0 0;
+  font-size: @fontsize-28;
+}
+
+.ne-user-profile-details__metadata {
+  & + &:before {
+    content: ", ";
+    position: relative;
+    right: 1px;
+  }
+}
+
+.ne-user-profile-details__control {
+  margin-top: @spacing-small;
+}
+
+.ne-user-profile-details__summary {
+  margin: @spacing-small 0 0 0;
+  text-align: left;
+}
+
+.follow-status-wrapper {
+  height: 22px;
+}
+
+.follow-status {
+  color: @wui-blue-1;
+  text-transform: uppercase;
+}
+
+.profile-divider {
+  margin-top: @spacing-medium;
+}
+
+.wui-descriptor__profile--medium {
+  font-size: @fontsize-14;
+}
+
+.wui-title__profile--small {
+  font-size: @fontsize-14
+}
+
+.tooltip--profile-cta {
+  position: relative;
+  margin-bottom: @spacing-small;
+  z-index: auto;
+}
+
+
+// Profile Image Dialog (Modal)
+// ==========================================================================
+
+.preview-prof-img {
+  max-width: 116px;
+  max-height: 116px;
+  margin: @spacing-small 0;
+  border: none;
+
+  @media (min-width: @screen-tablet) {
+    margin: 0;
+  }
+}
+
+.preview-prof-img-name {
+  font-size: @fontsize-12;
+}
+
+.prof-img-size-warning {
+  margin: @spacing-medium 0 0 0;
+  font-size: @fontsize-12;
+}
+
+.prof-img-size-error-msg {
+  margin: 0 0 @spacing-medium 0;
+  color: @color-error-light;
+  font-size: @fontsize-14;
+}
+
+
+// Profile Tabs
+// ==========================================================================
+
+.profile-side-menu {
+  margin: @spacing-medium 0 0 0;
+}
+
+.profile-tab-content {
+  .tab-content {
+    padding: 0 0 @spacing-medium 0;
+  }
+
+  .wui-card {
+    margin-bottom: @spacing-small;
+  }
+}
+
+.follower-list {
+  margin-top: @spacing-medium;
+
+  .ne-user-profile-object__wrapper {
+    margin-bottom: 0;
+  }
+}
+
+.no-following {
+  margin-top: @spacing-medium;
+}
+
+
+// Post Display Tab
+// ==========================================================================
+
+.ne-user-post-display {
+  margin-top: @spacing-medium;
+}
+
+.ne-profile-view__post-link {
+  color: @wui-blue-2;
+}
+
+
+// Comment Display Tab
+// ==========================================================================
+
+.profile-comment__content {
+  p {
+    margin-bottom: 0;
+  }
+}
+
+
+// User Drafts Display Tab
+// ==========================================================================
+
+.wui-card--user-drafts {
+  .wui-content-title--draft-post-title {
+    margin-bottom: 0;
+  }
+}
+
+.users-draft-display__post-controls {
+  display: inline-block;
+}
+
+
+
+

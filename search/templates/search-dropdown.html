@@ -1,0 +1,20 @@
+<div class="search-sort-dropdown" dropdown is-open="status.isopen" always>
+  <button id="single-button" type="button" class="wui-btn--block search-sort-dropdown__button" dropdown-toggle>
+    <span>Sort by: </span>
+    <span class="wui-emphasis">{{vm.buttonText}}</span>
+
+    <span class="caret pull-right"></span>
+  </button>
+
+  <ul class="dropdown-menu search-sort-dropdown__menu" role="menu" aria-labelledby="single-button">
+    <li role="menuitem" class="search-sort-dropdown__menu-item" ng-repeat="opt in vm.opts">
+      <a analytics-event
+         class="wui-emphasis search-sort-dropdown__menu-link"
+         event-category="searchresult-ck-sort"
+         event-action="{{opt.val}}" href=""
+         ng-click="vm.sortElements(opt.sortText, opt.val, $event)">
+        {{opt.sortText}}
+      </a>
+    </li>
+  </ul>
+</div>
